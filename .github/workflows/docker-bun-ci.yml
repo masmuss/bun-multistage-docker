@@ -19,11 +19,12 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
-      - name: Build production image
-        run: docker build --target=production -t bun-app-production .
-
       - name: Create .env.production file
         run: echo "NODE_ENV=production" > .env.production
+
+      - name: Build and run tests
+        run: |
+          docker compose --env-file .env.production --profile test up --build --abort-on-container-exit test
 
       - name: Build production image
         run: docker build --target=production -t bun-app-prod .
