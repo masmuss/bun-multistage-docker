@@ -1,6 +1,6 @@
-import { describe, it, expect, beforeAll, afterAll } from "bun:test";
-import app from "../src/index";
+import { afterAll, beforeAll, describe, expect, it } from "bun:test";
 import { serve } from "bun";
+import app from "../src/index";
 
 function request(path: string): Promise<Response> {
 	return fetch(`http://localhost:3001${path}`);
