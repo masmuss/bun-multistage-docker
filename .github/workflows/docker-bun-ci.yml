@@ -44,10 +44,18 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
+      - name: Get version from package.json
+        id: pkg
+        run: echo "VERSION=$(jq -r .version package.json)" >> $GITHUB_ENV
+
       - name: Tag and push image to Docker Hub
         env:
           DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+          DOCKERHUB_REPOSITORY: ${{ secrets.DOCKERHUB_REPOSITORY }}
+          VERSION: ${{ env.VERSION }}
         run: |
           IMAGE_NAME=${DOCKERHUB_USERNAME}/${DOCKERHUB_REPOSITORY}
-          docker tag #{DOCKERHUB_REPOSITORY} $IMAGE_NAME:latest
+          docker tag bun-app-prod $IMAGE_NAME:latest
+          docker tag bun-app-prod $IMAGE_NAME:$VERSION
           docker push $IMAGE_NAME:latest
+          docker push $IMAGE_NAME:$VERSION
