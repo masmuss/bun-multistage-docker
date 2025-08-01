@@ -21,6 +21,9 @@ jobs:
       - name: Build development image
         run: docker build --target=dev -t bun-app-dev .
 
+      - name: Create .env.test file
+        run: echo "NODE_ENV=test" > .env.test
+
       - name: Build and run tests
         run: |
           docker compose --env-file .env.test --profile test up --build --abort-on-container-exit test
@@ -38,8 +41,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Create .env.test file
-        run: |
-          echo "NODE_ENV=test" > .env.test
+        run: echo "NODE_ENV=test" > .env.test
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
