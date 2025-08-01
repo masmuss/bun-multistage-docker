@@ -1,6 +1,6 @@
 # Learn Docker with Bun
 
-This project demonstrates a modern development workflow using [Bun](https://bun.sh/) as the runtime, with Docker multi-stage builds and Docker Compose for environment management. It supports development, testing, and production environments with isolated configuration and repeatable builds.
+A starter template for developing, testing, and deploying Bun-based Node.js applications using Docker multi-stage builds and Docker Compose, with support for environment-specific configuration, automated containerized testing, and CI/CD integration.
 
 ## Features
 
@@ -10,6 +10,8 @@ This project demonstrates a modern development workflow using [Bun](https://bun.
 - **Environment variable management** via `.env` files
 - **Automated testing** inside containers
 - **Hot-reloading** in development with volume mounts
+- **CI/CD with GitHub Actions**: build, test, and push versioned images to Docker Hub
+- **Conventional commits, linting, and release automation** with Husky, Commitlint, Biome, and commit-and-tag-version
 
 ## Getting Started
 
@@ -18,16 +20,17 @@ This project demonstrates a modern development workflow using [Bun](https://bun.
 - [Docker](https://www.docker.com/)
 - [Docker Compose](https://docs.docker.com/compose/)
 - [Bun](https://bun.sh/) (for local non-container usage)
+- [Node.js](https://nodejs.org/) (for tooling like Husky, Commitlint, Biome)
 
 ### Local Development
 
-To install dependencies:
+Install dependencies:
 
 ```sh
 bun install
 ```
 
-To run locally:
+Run locally:
 
 ```sh
 bun run dev
@@ -75,22 +78,38 @@ Open [http://localhost:3000](http://localhost:3000)
 ### Project Structure
 
 ```
-/src         # Application source code
-/test        # Test files
-Dockerfile   # Multi-stage build file
-compose.yml  # Docker Compose configuration
-docker-env.sh# Environment switcher script
-.env.*       # Environment variable files
+/src             # Application source code
+/test            # Test files
+Dockerfile       # Multi-stage build file
+compose.yml      # Docker Compose configuration
+docker-env.sh    # Environment switcher script
+.env.*           # Environment variable files
+.github/         # GitHub Actions workflows
+biome.json       # Biome linter config
+commitlint.config.js # Commitlint config
 ```
 
-### Explanation
+### CI/CD
 
-This setup ensures:
+- **GitHub Actions** workflow in `.github/workflows/docker-bun-ci.yml`:
+  - Runs tests on every push/PR to `dev` and `main`
+  - On push to `main`, builds and tags Docker image with both `latest` and the version from `package.json`, then pushes to Docker Hub
 
-- Consistent environments across development, testing, and production
-- Fast local iteration with Bun and Docker volumes
-- Secure production images (test code not included)
-- Easy switching between environments with a single script
+### Linting, Commit, and Release
+
+- **Biome**: Lint and format code (`npm run lint`, `npm run format`)
+- **Husky**: Git hooks for linting and commit message checks
+- **Commitlint**: Enforces conventional commit messages
+- **commit-and-tag-version**: Automated version bumping and tagging
+
+### How to Release
+
+1. Commit your changes using conventional commits.
+2. Run:
+   ```sh
+   npm run release
+   ```
+   This will bump the version, tag, and prepare for Docker image tagging in CI.
 
 ## License
 
