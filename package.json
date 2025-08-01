@@ -2,12 +2,27 @@
   "name": "learn-docker",
   "scripts": {
     "start": "bun run src/index.ts",
-    "dev": "bun run --hot src/index.ts"
+    "dev": "bun run --hot src/index.ts",
+    "prepare": "husky install",
+    "lint": "biome check .",
+    "format": "biome format --write .",
+    "commit": "git-cz",
+    "release": "commit-and-tag-version"
   },
   "dependencies": {
     "hono": "^4.8.10"
   },
   "devDependencies": {
-    "@types/bun": "latest"
+    "@biomejs/biome": "2.1.3",
+    "@commitlint/cli": "^18.0.0",
+    "@commitlint/config-conventional": "^18.0.0",
+    "@types/bun": "latest",
+    "commit-and-tag-version": "^10.0.0",
+    "husky": "^9.0.0"
+  },
+  "config": {
+    "commitizen": {
+      "path": "cz-conventional-changelog"
+    }
   }
 }
