@@ -48,6 +48,6 @@ jobs:
         env:
           DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
         run: |
-          IMAGE_NAME=${DOCKERHUB_USERNAME}/bun-app-prod
-          docker tag bun-app-prod $IMAGE_NAME:latest
+          IMAGE_NAME=${DOCKERHUB_USERNAME}/${DOCKERHUB_REPOSITORY}
+          docker tag #{DOCKERHUB_REPOSITORY} $IMAGE_NAME:latest
           docker push $IMAGE_NAME:latest
