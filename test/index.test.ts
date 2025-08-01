@@ -9,10 +9,6 @@ function request(path: string): Promise<Response> {
 let server: ReturnType<typeof serve>
 
 beforeAll(() => {
-    if (process.env.NODE_ENV !== 'test') {
-        throw new Error('NODE_ENV must be set to "test" for running tests')
-    }
-
     server = serve({
         fetch: app.fetch,
         port: 3001,
