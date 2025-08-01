@@ -1,0 +1,37 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: dev
+    container_name: learn-docker-app
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
+    restart: unless-stopped
+
+  test:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: test
+    profiles: ["test"]
+    environment:
+      - NODE_ENV=test
+    command: ["bun", "test"]
+
+  production:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: production
+    profiles: ["production"]
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+    command: ["bun", "run", "start"]

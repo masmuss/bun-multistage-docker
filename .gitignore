@@ -1,0 +1,30 @@
+# deps
+node_modules/
+bun.lock
+
+# environment files
+.env*
+!.env.example
+
+# Docker
+*.log
+docker-compose.override.yml
+
+# OS/filesystem
+.DS_Store
+Thumbs.db
+
+# Build output
+dist/
+build/
+out/
+
+# IDE/editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Misc
+coverage/
+test-results/
