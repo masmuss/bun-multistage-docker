@@ -1,6 +1,5 @@
 # deps
 node_modules/
-bun.lock
 
 # environment files
 .env*
